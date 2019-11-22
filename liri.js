@@ -4,4 +4,13 @@ var Spotify = require('node-spotify-api');
 
 var spotify = new Spotify(keys.spotify);
 
-console.log(spotify)
+var userInput = process.argv[2];
+
+//Checks what the user inputted in terminal.
+
+switch (userInput) {
+    case "concert-this":
+        console.log("concert")
+        break;
+}
+
