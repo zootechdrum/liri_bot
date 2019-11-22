@@ -1,0 +1,25 @@
+{
+  "name": "liri_bot",
+  "version": "1.0.0",
+  "description": "This is a command line application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zootechdrum/liri_bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zootechdrum/liri_bot/issues"
+  },
+  "homepage": "https://github.com/zootechdrum/liri_bot#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
+    "node-spotify-api": "^1.1.1"
+  }
+}
