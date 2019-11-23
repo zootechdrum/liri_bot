@@ -7,11 +7,26 @@ var moment = require('moment');
 
 var spotify = new Spotify(keys.spotify);
 
-console.log(keys.omdb.id)
+
 
 var execCommand = process.argv[2];
 //SearchQ is what the user wants to look up.
 var searchQ = process.argv[3];
+
+
+//Take into account more then one argument and append them to searchQ
+
+
+for (var i = 4; i < process.argv.length; i++) {
+    if (process.argv.length > 3) {
+        searchQ = searchQ + "+" + process.argv[i];
+    } else {
+        searchQ = searchQ;
+    }
+}
+console.log(searchQ)
+console.log(execCommand)
+
 
 //Checks what the user inputted in terminal.
 
@@ -28,7 +43,22 @@ switch (execCommand) {
 function omdbCall(movie){
     axios.get("http://www.omdbapi.com/?t=" + searchQ + "&y=&plot=short&apikey=" + keys.omdb.id)
         .then(function (response){
-            console.log(response.data)
+            if(response.data.length === 0){
+                console.log(chalk.white.bgBlack.bold("Nothing matches your Criteria"))
+            }else{
+                console.log(chalk.white.bgBlack.bold("The movie title is " + response.data.Title))
+                console.log(chalk.red("--------------------------------------------"))
+                console.log(chalk.white.bgBlack.bold("The year this movie came out on " + response.data.Year))
+                console.log(chalk.red("--------------------------------------------"))
+                console.log(chalk.white.bgBlack.bold("The " + response.data.Ratings[1].Source + " score " + response.data.Ratings[1].Value))
+                console.log(chalk.red("--------------------------------------------")) 
+                console.log(chalk.white.bgBlack.bold("The language is originally in " + response.data.Language))
+                console.log(chalk.red("--------------------------------------------")) 
+                console.log(chalk.white.bgBlack.bold("Plot :: " + response.data.Plot))
+                console.log(chalk.red("--------------------------------------------")) 
+                console.log(chalk.white.bgBlack.bold("The actors in the movie are " + response.data.Actors))
+
+            }
         })
 }
 
