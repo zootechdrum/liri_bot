@@ -4,6 +4,7 @@ var Spotify = require('node-spotify-api');
 var axios = require('axios');
 var chalk = require('chalk');
 var moment = require('moment');
+var fs = require('fs');
 
 var spotify = new Spotify(keys.spotify);
 
@@ -24,9 +25,6 @@ for (var i = 4; i < process.argv.length; i++) {
         searchQ = searchQ;
     }
 }
-console.log(searchQ)
-console.log(execCommand)
-
 
 //Checks what the user inputted in terminal.
 
@@ -36,6 +34,12 @@ switch (execCommand) {
         break;
     case "movie-this":
         omdbCall(searchQ)
+        break;
+    case "spotify-this-song":
+        spotTheSong(searchQ)
+        break;
+    case "do-what-it-says":
+        callRandom()
         break;
 }
 
@@ -78,5 +82,29 @@ function bandIntown(artist){
         console.log(chalk.white.bgBlack.bold("The date the event will held is " + moment(response.data[0].datetime).format('LLLL'))) 
         }
     });
+}
 
+
+function spotTheSong(song){
+    spotify.search({ type: 'track', query: song })
+    .then(function(response){
+        console.log(response.tracks.items[0].album.name)
+        console.log(response.tracks.items[1].album.artists[0].name)
+        console.log(chalk.white.bgBlack.bold("This band/artist who created this is " + response.tracks.items[1].album.artists[0].name))
+        console.log(chalk.red("--------------------------------------------"))
+        console.log(chalk.white.bgBlack.bold("The song name is " + song))
+        console.log(chalk.red("--------------------------------------------"))
+        console.log(chalk.white.bgBlack.bold("The song can be heard at  " + response.tracks.items[1].external_urls.spotify))
+        console.log(chalk.red("--------------------------------------------"))
+        console.log(chalk.white.bgBlack.bold("The song is from the album  " + response.tracks.items[0].album.name))
+    
+    })
+
+}
+
+function callRandom(){
+    fs.readFile('random.txt','utf-8',function(err,data){
+        data = data.split(",")
+        spotTheSong(data[1])
+    })
 }
