@@ -9,15 +9,14 @@ var fs = require('fs');
 var spotify = new Spotify(keys.spotify);
 
 
-
 var execCommand = process.argv[2];
 //SearchQ is what the user wants to look up.
 var searchQ = process.argv[3];
 
+//Instructions on how this command line application works
+
 
 //Take into account more then one argument and append them to searchQ
-
-
 for (var i = 4; i < process.argv.length; i++) {
     if (process.argv.length > 3) {
         searchQ = searchQ + "+" + process.argv[i];
@@ -50,17 +49,14 @@ function omdbCall(movie){
             if(response.data.length === 0){
                 console.log(chalk.white.bgBlack.bold("Nothing matches your Criteria"))
             }else{
+                console.log(chalk.red("--------------------------------------------"))
                 console.log(chalk.white.bgBlack.bold("The movie title is " + response.data.Title))
-                console.log(chalk.red("--------------------------------------------"))
                 console.log(chalk.white.bgBlack.bold("The year this movie came out on " + response.data.Year))
-                console.log(chalk.red("--------------------------------------------"))
-                console.log(chalk.white.bgBlack.bold("The " + response.data.Ratings[1].Source + " score " + response.data.Ratings[1].Value))
-                console.log(chalk.red("--------------------------------------------")) 
-                console.log(chalk.white.bgBlack.bold("The language is originally in " + response.data.Language))
-                console.log(chalk.red("--------------------------------------------")) 
-                console.log(chalk.white.bgBlack.bold("Plot :: " + response.data.Plot))
-                console.log(chalk.red("--------------------------------------------")) 
+                console.log(chalk.white.bgBlack.bold("The " + response.data.Ratings[1].Source + " score " + response.data.Ratings[1].Value)) 
+                console.log(chalk.white.bgBlack.bold("The language is originally in " + response.data.Language)) 
+                console.log(chalk.white.bgBlack.bold("Plot :: " + response.data.Plot)) 
                 console.log(chalk.white.bgBlack.bold("The actors in the movie are " + response.data.Actors))
+
 
             }
         })
@@ -88,16 +84,14 @@ function bandIntown(artist){
 function spotTheSong(song){
     spotify.search({ type: 'track', query: song })
     .then(function(response){
-        console.log(response.tracks.items[0].album.name)
-        console.log(response.tracks.items[1].album.artists[0].name)
-        console.log(chalk.white.bgBlack.bold("This band/artist who created this is " + response.tracks.items[1].album.artists[0].name))
-        console.log(chalk.red("--------------------------------------------"))
+        for(var i = 0; i < response.tracks.items.length; i++){
+            console.log(chalk.red("--------------------------------------------"))
+        console.log(chalk.white.bgBlack.bold("This band/artist who created this is " + response.tracks.items[i].album.artists[0].name))
         console.log(chalk.white.bgBlack.bold("The song name is " + song))
-        console.log(chalk.red("--------------------------------------------"))
         console.log(chalk.white.bgBlack.bold("The song can be heard at  " + response.tracks.items[1].external_urls.spotify))
+        console.log(chalk.white.bgBlack.bold("The song is from the album  " + response.tracks.items[i].album.name))
         console.log(chalk.red("--------------------------------------------"))
-        console.log(chalk.white.bgBlack.bold("The song is from the album  " + response.tracks.items[0].album.name))
-    
+        }
     })
 
 }
