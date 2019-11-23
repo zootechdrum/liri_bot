@@ -10,6 +10,7 @@ var spotify = new Spotify(keys.spotify);
 console.log(keys.omdb.id)
 
 var execCommand = process.argv[2];
+//SearchQ is what the user wants to look up.
 var searchQ = process.argv[3];
 
 //Checks what the user inputted in terminal.
@@ -18,6 +19,17 @@ switch (execCommand) {
     case "concert-this":
         bandIntown(searchQ)
         break;
+    case "movie-this":
+        omdbCall(searchQ)
+        break;
+}
+
+
+function omdbCall(movie){
+    axios.get("http://www.omdbapi.com/?t=" + searchQ + "&y=&plot=short&apikey=" + keys.omdb.id)
+        .then(function (response){
+            console.log(response.data)
+        })
 }
 
 
