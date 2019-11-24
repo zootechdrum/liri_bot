@@ -8,6 +8,8 @@ var fs = require('fs');
 
 var spotify = new Spotify(keys.spotify);
 
+var appendSent = ""
+
 
 var execCommand = process.argv[2];
 //SearchQ is what the user wants to look up.
@@ -57,7 +59,15 @@ function omdbCall(movie){
                 console.log(chalk.white.bgBlack.bold("Plot :: " + response.data.Plot)) 
                 console.log(chalk.white.bgBlack.bold("The actors in the movie are " + response.data.Actors))
 
+                appendSent = "The movie title is " + response.data.Title + "\r\n" + " ------------------- " + "\r\n" +"The year this movie came out on is " + response.data.Year + "\r\n" +
+                            " ------------------- " + "\r\n" +
+                             "the " +  response.data.Ratings[1].Source + " score : " +  response.data.Ratings[1].Value 
 
+
+                
+
+
+                append('movie-this',appendSent)
             }
         })
 }
@@ -95,6 +105,20 @@ function spotTheSong(song){
     })
 
 }
+
+
+
+
+function append(command,movieDet) {
+    if(command === 'movie-this'){
+
+    fs.appendFile('log.txt', movieDet, function (err) {
+        if (err) throw err;
+        console.log(command);
+      });
+    }
+}
+
 
 function callRandom(){
     fs.readFile('random.txt','utf-8',function(err,data){
