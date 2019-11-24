@@ -71,13 +71,7 @@ function omdbCall(movie){
                              " ------------------- " + "\r\n" +
                              "The actors in the movie are " + response.data.Actors +
                              " ------------------------------------------------------------------------------------- " + "\r\n" +
-
-
-
-                
-
-
-                append('movie-this',appendSent)
+                append(appendSent)
             }
         })
 }
@@ -95,7 +89,18 @@ function bandIntown(artist){
         console.log(chalk.red("--------------------------------------------"))
         console.log(chalk.white.bgBlack.bold("The concert will be held in  " + response.data[0].venue.city))
         console.log(chalk.red("--------------------------------------------"))
-        console.log(chalk.white.bgBlack.bold("The date the event will held is " + moment(response.data[0].datetime).format('LLLL'))) 
+        console.log(chalk.white.bgBlack.bold("The date the event will held is " + moment(response.data[0].datetime).format('LLLL')))
+
+        appendSent =  "You executed the command " + " < " + execCommand + " > " + "\r\n" +
+            " ------------------- " + "\r\n" +
+            "The Venue will be " + response.data[0].venue.name + "\r\n" +
+            " ------------------- " + "\r\n" +
+            "The concert will be held in  " + response.data[0].venue.city + "\r\n" +
+            " ------------------- " + "\r\n" +
+            "The date the event will held is " + moment(response.data[0].datetime).format('LLLL') + "\r\n" +
+            " ------------------------------------------------------------------------------------- " + "\r\n" 
+            append(appendSent)
+
         }
     });
 }
@@ -105,12 +110,22 @@ function spotTheSong(song){
     spotify.search({ type: 'track', query: song })
     .then(function(response){
         for(var i = 0; i < response.tracks.items.length; i++){
+                console.log(chalk.red("--------------------------------------------"))
+            console.log(chalk.white.bgBlack.bold("This band/artist who created this is " + response.tracks.items[i].album.artists[0].name))
+            console.log(chalk.white.bgBlack.bold("The song name is " + song))
+            console.log(chalk.white.bgBlack.bold("The song can be heard at  " + response.tracks.items[1].external_urls.spotify))
+            console.log(chalk.white.bgBlack.bold("The song is from the album  " + response.tracks.items[i].album.name))
             console.log(chalk.red("--------------------------------------------"))
-        console.log(chalk.white.bgBlack.bold("This band/artist who created this is " + response.tracks.items[i].album.artists[0].name))
-        console.log(chalk.white.bgBlack.bold("The song name is " + song))
-        console.log(chalk.white.bgBlack.bold("The song can be heard at  " + response.tracks.items[1].external_urls.spotify))
-        console.log(chalk.white.bgBlack.bold("The song is from the album  " + response.tracks.items[i].album.name))
-        console.log(chalk.red("--------------------------------------------"))
+
+            appendSent = " -------------------------------------------- " + "\r\n" +
+                        "This band/artist who created this is " + response.tracks.items[i].album.artists[0].name +  "\r\n" +
+                        "The song name is " + song +  "\r\n" +
+                        "The song can be heard at  " + response.tracks.items[1].external_urls.spotify + "\r\n" +
+                        "The song is from the album  " + response.tracks.items[i].album.name + "\r\n" +
+                        "--------------------------------------------" + "\r\n" 
+                        append(appendSent)
+
+                         
         }
     })
 
@@ -119,15 +134,12 @@ function spotTheSong(song){
 
 
 
-function append(command,movieDet) {
-    if(command === 'movie-this'){
-
-    fs.appendFile('log.txt', movieDet, function (err) {
+function append(sentAppend) {
+    fs.appendFile('log.txt', sentAppend, function (err) {
         if (err) throw err;
-        console.log(command);
       });
     }
-}
+
 
 
 function callRandom(){
