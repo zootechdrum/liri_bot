@@ -59,9 +59,19 @@ function omdbCall(movie){
                 console.log(chalk.white.bgBlack.bold("Plot :: " + response.data.Plot)) 
                 console.log(chalk.white.bgBlack.bold("The actors in the movie are " + response.data.Actors))
 
-                appendSent = "The movie title is " + response.data.Title + "\r\n" + " ------------------- " + "\r\n" +"The year this movie came out on is " + response.data.Year + "\r\n" +
+                appendSent = "You executed the command " + " < " + execCommand + " > " + "\r\n" +
                             " ------------------- " + "\r\n" +
-                             "the " +  response.data.Ratings[1].Source + " score : " +  response.data.Ratings[1].Value 
+                            "The movie title is " + response.data.Title + "\r\n" + " ------------------- " + "\r\n" +"The year this movie came out on is " + response.data.Year + "\r\n" +
+                            " ------------------- " + "\r\n" +
+                             "the " +  response.data.Ratings[1].Source + " score : " +  response.data.Ratings[1].Value + "\r\n" +
+                             " ------------------- " + "\r\n" +
+                             "The language is originally in " + response.data.Language + "\r\n" +
+                             " ------------------- " + "\r\n" +
+                             "Plot :: " + response.data.Plot + "\r\n" +
+                             " ------------------- " + "\r\n" +
+                             "The actors in the movie are " + response.data.Actors +
+                             " ------------------------------------------------------------------------------------- " + "\r\n" +
+
 
 
                 
