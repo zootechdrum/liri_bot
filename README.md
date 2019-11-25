@@ -35,3 +35,36 @@ reading.
 
 
 ![project-demo](node.gif)
+
+## Important code snippet
+
+The code below is how much of the core application works. Gets an argument for processArgv variable and then inserts that into 1 of 3 functions. We then set a whole paragraph to appendSent so we can pass it into an append function later on. 
+
+```Javascript
+function bandIntown(artist){
+    axios.get("https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp")
+    .then(function (response){
+        //conditional if response.data is equal to empty array
+        if(response.data.length === 0){
+            console.log(chalk.white.bgBlack.bold("Nothing matches your Criteria"))
+        }else{
+        console.log(chalk.white.bgBlack.bold("The Venue will be " + response.data[0].venue.name))
+        console.log(chalk.red("--------------------------------------------"))
+        console.log(chalk.white.bgBlack.bold("The concert will be held in  " + response.data[0].venue.city))
+        console.log(chalk.red("--------------------------------------------"))
+        console.log(chalk.white.bgBlack.bold("The date the event will held is " + moment(response.data[0].datetime).format('LLLL')))
+
+        appendSent =  "You executed the command " + " < " + execCommand + " > " + "\r\n" +
+            " ------------------- " + "\r\n" +
+            "The Venue will be " + response.data[0].venue.name + "\r\n" +
+            " ------------------- " + "\r\n" +
+            "The concert will be held in  " + response.data[0].venue.city + "\r\n" +
+            " ------------------- " + "\r\n" +
+            "The date the event will held is " + moment(response.data[0].datetime).format('LLLL') + "\r\n" +
+            " ------------------------------------------------------------------------------------- " + "\r\n" 
+            append(appendSent)
+
+        }
+    });
+}
+```
